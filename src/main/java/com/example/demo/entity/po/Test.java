@@ -3,7 +3,12 @@ package com.example.demo.entity.po;/*
  * @date 2019/10/17
  */
 
-public class Test {
+import java.io.Serializable;
+
+//对应数据库表中的test表
+//与数据库表对应的都写在po包里面
+//这个是序列表的意思
+public class Test implements Serializable {
     private int id;
     private String name;
 

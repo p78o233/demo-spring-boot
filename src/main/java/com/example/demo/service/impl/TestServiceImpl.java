@@ -22,4 +22,33 @@ public class TestServiceImpl implements TestService {
         tests = testMapper.getAllTest();
         return tests;
     }
+
+    @Override
+    public List<Test> getTestEquals(int id) {
+        List<Test> tests = new ArrayList<>();
+        tests = testMapper.getTestEquals(id);
+        return tests;
+    }
+
+    @Override
+    public List<Test> getTestLike(String name) {
+        List<Test> tests = new ArrayList<>();
+        tests = testMapper.getTestLike(name);
+        return tests;
+    }
+
+    @Override
+    public int insertTest(Test test) {
+        return testMapper.insertTest(test);
+    }
+
+    @Override
+    public int updateTest(Test test) {
+        return testMapper.updateTest(test);
+    }
+
+    @Override
+    public int deleteTest(int id) {
+        return testMapper.deleteTest(id);
+    }
 }
