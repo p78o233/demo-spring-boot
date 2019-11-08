@@ -9,6 +9,8 @@ import com.example.demo.entity.po.Test;
 import java.util.List;
 
 public interface TestService {
+//    多态列子
+    String mutil();
 //    sql无条件查询列子
     List<Test> getAllTest();
 //    sql精确查询例子

@@ -12,10 +12,16 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-@Service
+@Service("testServiceImpl")
 public class TestServiceImpl implements TestService {
     @Autowired
     private TestMapper testMapper;
+
+    @Override
+    public String mutil() {
+        return "多态1";
+    }
+
     @Override
     public List<Test> getAllTest() {
         List<Test> tests = new ArrayList<>();
