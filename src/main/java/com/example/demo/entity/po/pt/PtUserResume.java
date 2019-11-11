@@ -13,6 +13,8 @@ public class PtUserResume {
     private String selfDescription;
     @ApiModelProperty(value = "最高学历")
     private String topEduction;
+    @ApiModelProperty(value = "是否删除 0正常 1已经删除")
+    private boolean isdel;
 
     public PtUserResume() {
     }
@@ -49,10 +51,19 @@ public class PtUserResume {
         this.topEduction = topEduction;
     }
 
-    public PtUserResume(Integer id, int ptUserId, String selfDescription, String topEduction) {
+    public boolean isIsdel() {
+        return isdel;
+    }
+
+    public void setIsdel(boolean isdel) {
+        this.isdel = isdel;
+    }
+
+    public PtUserResume(Integer id, int ptUserId, String selfDescription, String topEduction, boolean isdel) {
         this.id = id;
         this.ptUserId = ptUserId;
         this.selfDescription = selfDescription;
         this.topEduction = topEduction;
+        this.isdel = isdel;
     }
 }

@@ -51,7 +51,8 @@ public class PtUser {
     private Date createTime;
     @ApiModelProperty(value = "修改时间")
     private Date modifyTime;
-
+    @ApiModelProperty(value = "是否删除 0正常 1已经删除")
+    private boolean isdel;
     public PtUser() {
     }
 
@@ -231,7 +232,15 @@ public class PtUser {
         this.modifyTime = modifyTime;
     }
 
-    public PtUser(Integer id, String userName, String tel, String wxCode, String qqCode, String nickName, String pwd, String token, String province, String city, String area, String address, int score, String emergencyContact, String emergencyTel, String idNum, int gender, String idCardFront, String idCardBack, String withIdCard, Date createTime, Date modifyTime) {
+    public boolean isIsdel() {
+        return isdel;
+    }
+
+    public void setIsdel(boolean isdel) {
+        this.isdel = isdel;
+    }
+
+    public PtUser(Integer id, String userName, String tel, String wxCode, String qqCode, String nickName, String pwd, String token, String province, String city, String area, String address, int score, String emergencyContact, String emergencyTel, String idNum, int gender, String idCardFront, String idCardBack, String withIdCard, Date createTime, Date modifyTime, boolean isdel) {
         this.id = id;
         this.userName = userName;
         this.tel = tel;
@@ -254,5 +263,6 @@ public class PtUser {
         this.withIdCard = withIdCard;
         this.createTime = createTime;
         this.modifyTime = modifyTime;
+        this.isdel = isdel;
     }
 }
