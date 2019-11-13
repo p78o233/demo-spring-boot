@@ -36,7 +36,10 @@ public class PtUserServiceImpl implements PtUserService {
     }
 
     @Override
-    public boolean registerPtUser(PtUser ptUser) {
+    public Boolean registerPtUser(PtUser ptUser) {
+//        检查有无相同的手机账号
+        if(ptUserMapper.getExistTel(ptUser.getTel())>0)
+            return null;
         ptUser.setCreateTime(new Date());
         if(ptUserMapper.insertPtUser(ptUser)>0)
             return true;

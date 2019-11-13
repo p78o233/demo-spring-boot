@@ -30,7 +30,14 @@ public class PtUserController {
     @PostMapping(value = "/register")
     @ApiOperation(value = "用户注册")
     public R register(@RequestBody @ApiParam(name="兼职用户注册信息",value="ptUser",required=true) PtUser ptUser){
-        return new R (true,200,ptUserService.registerPtUser(ptUser),"");
+        Boolean flag = ptUserService.registerPtUser(ptUser);
+        if(flag==null){
+            return new R(false,300,flag,"手机号码不能重复");
+        }else if(flag){
+            return new R (true,200,flag,"注册成功");
+        }else{
+            return new R (false,300,flag,"注册失败");
+        }
     }
 
     @PostMapping(value = "/updatePtUserPwd")
@@ -42,6 +49,10 @@ public class PtUserController {
     })
     public R updatePtUserPwd(@RequestParam String oldPwd,@RequestParam String newPwd,@RequestParam int id){
         return new R(true,200,ptUserService.updatePtUserPwd(oldPwd,newPwd,id),"");
+
+    }
+    @GetMapping(value = "/test")
+    public void test(){
 
     }
 }

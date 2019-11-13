@@ -26,6 +26,8 @@ public interface PtUserMapper {
             "#{p.area},#{p.address},#{p.emergencyContact},#{p.emergencyTel},#{p.idNum},#{p.gender},#{p.idCardFront}," +
             "#{p.idCardBack},#{p.withIdCard},#{p.createTime})")
     int insertPtUser(@Param("p")PtUser ptUser);
+    @Select("select count(*) from pt_user where tel = #{tel} and isdel = '0'")
+    int getExistTel(@Param("tel")String tel);
 //    修改密码
     @Update("update pt_user set pwd = #{newPwd} where id = #{id} and pwd = #{oldPwd}")
     int updatePtUserPwd(@Param("newPwd")String newPwd,@Param("oldPwd")String oldPwd,@Param("id")int id);

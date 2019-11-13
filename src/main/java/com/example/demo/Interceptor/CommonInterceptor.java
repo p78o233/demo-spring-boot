@@ -1,13 +1,22 @@
 package com.example.demo.Interceptor;
 
+import com.alibaba.fastjson.JSONObject;
+import com.example.demo.service.interceptor.InterceptorService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
+@Component
 public class CommonInterceptor implements HandlerInterceptor {
+    @Autowired
+    private InterceptorService interceptorService;
 
     private List<String> excludedUrls;
 
@@ -40,7 +49,44 @@ public class CommonInterceptor implements HandlerInterceptor {
         response.setHeader("Access-Control-Max-Age", "3600");
         response.setHeader("Access-Control-Allow-Headers",
                 "Origin, X-Requested-With, Content-Type, Accept,token");
-        return true;
+//        拦截请求路径
+        String path = request.getServletPath();
+        if (path.matches(Const.NO_INTERCEPTOR_PATH)) {
+            //不需要的拦截直接过
+            return true;
+        } else {
+            // 这写你拦截需要干的事儿，比如取缓存，SESSION，权限判断等
+            String token = request.getHeader("token");
+            if(!"".equals(token)&&token!=null) {
+                String url = request.getRequestURI();
+//            判断是哪个项目的
+                String projectName = url.substring(0, url.indexOf("/", url.indexOf("/") + 1));
+                switch (projectName) {
+                    case "/pt": {
+                        String role = url.split("/")[2];
+                        if (role.equals("pt-user")) {
+//                        兼职用户操作
+                        }else if(role.equals("pt-admin")){
+//                            系统管理员操作
+                            if(interceptorService.checkPtAdmin(token)){
+
+                            }
+                        }
+                    }
+                    break;
+                }
+            }else{
+                JSONObject json = new JSONObject();
+                json.put("ret",false);
+                json.put("code",504);
+                json.put("data",null);
+                json.put("message","登陆失效，请重新登陆");
+                returnJson(response,String.valueOf(json));
+                return false;
+            }
+            return true;
+        }
+//        return true;
     }
 
     // 在业务处理器处理请求执行完成后,生成视图之前执行的动作
@@ -65,6 +111,22 @@ public class CommonInterceptor implements HandlerInterceptor {
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response,
                                 Object handler, Exception ex) throws Exception {
 
+    }
+
+    private void returnJson(HttpServletResponse response, String json) throws Exception {
+        PrintWriter writer = null;
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html; charset=utf-8");
+        try {
+            writer = response.getWriter();
+            writer.print(json);
+
+        } catch (IOException e) {
+
+        } finally {
+            if (writer != null)
+                writer.close();
+        }
     }
 }
 

@@ -10,7 +10,7 @@ public interface PtUserService {
 //    登陆
     public R loginPtUser(String tel, String pwd);
 //    注册
-    public boolean registerPtUser(PtUser ptUser);
+    public Boolean registerPtUser(PtUser ptUser);
 //    修改密码
     public boolean updatePtUserPwd(String oldPwd,String newPwd,int id);
 }
