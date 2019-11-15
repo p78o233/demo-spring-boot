@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50717
 File Encoding         : 65001
 
-Date: 2019-11-11 17:25:52
+Date: 2019-11-15 17:32:56
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -31,11 +31,12 @@ CREATE TABLE `pt_admin` (
   `isdel` bit(1) DEFAULT b'0' COMMENT '是否删除 0正常 1删除',
   `nickName` varchar(20) DEFAULT NULL COMMENT '昵称',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of pt_admin
 -- ----------------------------
+INSERT INTO `pt_admin` VALUES ('1', '123', 'c4ca4238a0b923820dcc509a6f75849b', '123', '2019-11-14 09:53:37', null, null, null, '', 'p78o2');
 
 -- ----------------------------
 -- Table structure for `pt_admin_role`
@@ -51,11 +52,12 @@ CREATE TABLE `pt_admin_role` (
   `modifyAdmin` int(10) unsigned DEFAULT NULL,
   `isdel` bit(1) DEFAULT b'0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of pt_admin_role
 -- ----------------------------
+INSERT INTO `pt_admin_role` VALUES ('1', '1', '1', '2019-11-14 09:57:37', '1', null, null, '');
 
 -- ----------------------------
 -- Table structure for `pt_company`
@@ -117,11 +119,12 @@ CREATE TABLE `pt_permission` (
   `modifyAdmin` int(10) unsigned DEFAULT NULL,
   `isdel` bit(1) DEFAULT b'0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of pt_permission
 -- ----------------------------
+INSERT INTO `pt_permission` VALUES ('1', '测试接口', '/pt/pt-user/index/test', '0', '2019-11-14 09:56:53', '1', null, null, '');
 
 -- ----------------------------
 -- Table structure for `pt_role`
@@ -137,11 +140,12 @@ CREATE TABLE `pt_role` (
   `modifyAdmin` int(10) unsigned DEFAULT NULL,
   `isdel` bit(1) DEFAULT b'0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of pt_role
 -- ----------------------------
+INSERT INTO `pt_role` VALUES ('1', '管理员', 'Admin', '2019-11-14 09:55:43', '1', null, null, '');
 
 -- ----------------------------
 -- Table structure for `pt_role_permission`
@@ -157,11 +161,12 @@ CREATE TABLE `pt_role_permission` (
   `modifyAdmin` int(11) DEFAULT NULL,
   `isdel` bit(1) DEFAULT b'0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of pt_role_permission
 -- ----------------------------
+INSERT INTO `pt_role_permission` VALUES ('1', '1', '1', '2019-11-14 09:57:51', '1', null, null, '');
 
 -- ----------------------------
 -- Table structure for `pt_user`
@@ -197,7 +202,7 @@ CREATE TABLE `pt_user` (
 -- ----------------------------
 -- Records of pt_user
 -- ----------------------------
-INSERT INTO `pt_user` VALUES ('1', '测试账号', '123456', null, null, 'p78o2', 'e10adc3949ba59abbe56e057f20f883e', 'e7b2b649a9d0e8e1c38ae46957d7333c', null, null, null, null, '100', null, null, null, null, null, null, null, '2019-11-11 14:42:34', null, '');
+INSERT INTO `pt_user` VALUES ('1', '测试账号', '123456', null, null, 'p78o2', 'e10adc3949ba59abbe56e057f20f883e', '8fccc8cd9d8b90499d093afa08c94b2f', null, null, null, null, '100', null, null, null, null, null, null, null, '2019-11-11 14:42:34', null, '');
 
 -- ----------------------------
 -- Table structure for `pt_user_resume`
