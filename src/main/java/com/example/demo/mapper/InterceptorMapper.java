@@ -3,7 +3,6 @@ package com.example.demo.mapper;/*
  * @date 2019/11/13
  */
 
-import com.example.demo.entity.po.pt.PtPermission;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
@@ -17,9 +16,9 @@ public interface InterceptorMapper {
 //    根据token获取pt-admin 的id
     @Select("select id from pt_admin where token = #{token} and isdel = '0'")
     int getPtAdminId(@Param("token")String token);
-//    根据权限url获取权限id
-    @Select("select * from pt_permission where permissionUrl = #{permissionUrl} and isdel ='0'")
-    PtPermission getPtPermission(@Param("permissionUrl")String permissionUrl);
+//    根据权限url及用户id获取是否有权限
+    @Select("select count(*) from pt_permission where id in(select permissionId from pt_role_permission where roleId in (select ptRoleId from pt_admin_role where ptAdminId = #{ptAdminId})) and permissionUrl = #{permissionUrl}")
+    int checkAdminPermission(@Param("ptAdminId") int ptAdminId,@Param("permissionUrl")String permissionUrl);
 //    兼职项目结束
 
 }

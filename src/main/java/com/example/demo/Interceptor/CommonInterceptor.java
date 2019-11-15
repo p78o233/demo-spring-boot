@@ -2,21 +2,24 @@ package com.example.demo.Interceptor;
 
 import com.alibaba.fastjson.JSONObject;
 import com.example.demo.service.interceptor.InterceptorService;
+import com.example.demo.service.interceptor.InterceptorServiceImpl;
+import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
 @Component
 public class CommonInterceptor implements HandlerInterceptor {
-    @Autowired
-    private InterceptorService interceptorService;
+    private InterceptorService interceptorService = null;
 
     private List<String> excludedUrls;
 
@@ -49,6 +52,7 @@ public class CommonInterceptor implements HandlerInterceptor {
         response.setHeader("Access-Control-Max-Age", "3600");
         response.setHeader("Access-Control-Allow-Headers",
                 "Origin, X-Requested-With, Content-Type, Accept,token");
+        interceptorService = new InterceptorServiceImpl();
 //        拦截请求路径
         String path = request.getServletPath();
         if (path.matches(Const.NO_INTERCEPTOR_PATH)) {
@@ -68,14 +72,45 @@ public class CommonInterceptor implements HandlerInterceptor {
 //                        兼职用户操作
                         }else if(role.equals("pt-admin")){
 //                            系统管理员操作
+//                            检查token是否有效
+                            if(interceptorService==null) {
+                                BeanFactory factory = WebApplicationContextUtils.getRequiredWebApplicationContext(request.getServletContext());
+                                interceptorService = (InterceptorService) factory.getBean("interceptorServiceImpl");
+                            }
                             if(interceptorService.checkPtAdmin(token)){
-
+//                                检查是否有权限操作
+                                int adminId = interceptorService.getPtAdminIdByToken(token);
+//                                if(true){
+                                if(interceptorService.checkPermission(adminId,url.split("/")[2]+"/"+url.split("/")[3]+"/"+url.split("/")[4])){
+                                    HttpSession session = request.getSession();
+                                    session.setAttribute("adminId",adminId);
+                                    return true;
+                                }else{
+//                                    无权限
+                                    JSONObject json = new JSONObject();
+                                    json.put("ret",false);
+                                    json.put("code",505);
+                                    json.put("data",null);
+                                    json.put("message","您无权进行本操作，请联系管理员");
+                                    returnJson(response,String.valueOf(json));
+                                    return false;
+                                }
+                            }else{
+//                                token无效
+                                JSONObject json = new JSONObject();
+                                json.put("ret",false);
+                                json.put("code",504);
+                                json.put("data",null);
+                                json.put("message","登陆失效，请重新登陆");
+                                returnJson(response,String.valueOf(json));
+                                return false;
                             }
                         }
                     }
                     break;
                 }
             }else{
+//                没有传token
                 JSONObject json = new JSONObject();
                 json.put("ret",false);
                 json.put("code",504);

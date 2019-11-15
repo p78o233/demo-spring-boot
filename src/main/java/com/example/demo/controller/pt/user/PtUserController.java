@@ -10,6 +10,9 @@ import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 @RestController
 @RequestMapping("/pt/pt-user/index")
 @Api(description = "兼职用户模块")
@@ -51,8 +54,5 @@ public class PtUserController {
         return new R(true,200,ptUserService.updatePtUserPwd(oldPwd,newPwd,id),"");
 
     }
-    @GetMapping(value = "/test")
-    public void test(){
 
-    }
 }

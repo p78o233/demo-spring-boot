@@ -3,12 +3,13 @@ package com.example.demo.service.interceptor;/*
  * @date 2019/11/13
  */
 
-import com.example.demo.entity.po.pt.PtPermission;
 import com.example.demo.mapper.InterceptorMapper;
+import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
-@Service
+@Service("interceptorServiceImpl")
 public class InterceptorServiceImpl implements InterceptorService {
     @Autowired
     private InterceptorMapper interceptorMapper;
@@ -27,11 +28,11 @@ public class InterceptorServiceImpl implements InterceptorService {
 
     @Override
     public boolean checkPermission(int userId, String permissionUrl) {
-        PtPermission ptPermission = new PtPermission();
-        ptPermission = interceptorMapper.getPtPermission(permissionUrl);
-        
+        if(interceptorMapper.checkAdminPermission(userId,permissionUrl)>0)
+            return true;
         return false;
     }
 
     //    兼职系统结束
+
 }

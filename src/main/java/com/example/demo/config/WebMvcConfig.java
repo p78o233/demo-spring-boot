@@ -1,5 +1,6 @@
 package com.example.demo.config;
 import com.example.demo.Interceptor.CommonInterceptor;
+import io.swagger.models.auth.In;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
@@ -33,6 +34,10 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter{
 
     }
     @Bean
+    public CommonInterceptor commonInterceptor(){
+        return new CommonInterceptor();
+    }
+    @Bean
     public CorsFilter corsFilter() {
         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         final CorsConfiguration config = new CorsConfiguration();
@@ -54,6 +59,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter{
     public void addInterceptors(InterceptorRegistry registry) {
 
         registry.addInterceptor(new CommonInterceptor());
+        registry.addInterceptor(commonInterceptor());
         super.addInterceptors(registry);
     }
 }
