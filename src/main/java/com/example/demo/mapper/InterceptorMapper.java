@@ -5,9 +5,11 @@ package com.example.demo.mapper;/*
 
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 @Repository
+@Component
 public interface InterceptorMapper {
 //    兼职项目开始
 //    检查token是否正确

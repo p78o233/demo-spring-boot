@@ -1,6 +1,7 @@
 package com.example.demo.config;
 import com.example.demo.Interceptor.CommonInterceptor;
-import io.swagger.models.auth.In;
+import com.example.demo.mapper.InterceptorMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
@@ -12,6 +13,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 @Configuration
 public class WebMvcConfig extends WebMvcConfigurerAdapter{
+    @Autowired
+    private InterceptorMapper interceptorMapper;
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
 
@@ -34,10 +37,6 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter{
 
     }
     @Bean
-    public CommonInterceptor commonInterceptor(){
-        return new CommonInterceptor();
-    }
-    @Bean
     public CorsFilter corsFilter() {
         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         final CorsConfiguration config = new CorsConfiguration();
@@ -58,8 +57,8 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter{
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
 
-        registry.addInterceptor(new CommonInterceptor());
-        registry.addInterceptor(commonInterceptor());
+        registry.addInterceptor(new CommonInterceptor(interceptorMapper));
+//        registry.addInterceptor(commonInterceptor());
         super.addInterceptors(registry);
     }
 }

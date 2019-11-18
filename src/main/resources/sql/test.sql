@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50717
 File Encoding         : 65001
 
-Date: 2019-11-15 17:32:56
+Date: 2019-11-18 15:54:31
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -124,7 +124,7 @@ CREATE TABLE `pt_permission` (
 -- ----------------------------
 -- Records of pt_permission
 -- ----------------------------
-INSERT INTO `pt_permission` VALUES ('1', '测试接口', '/pt/pt-user/index/test', '0', '2019-11-14 09:56:53', '1', null, null, '');
+INSERT INTO `pt_permission` VALUES ('1', '测试接口', '/pt/pt-admin/index/test', '0', '2019-11-14 09:56:53', '1', null, null, '');
 
 -- ----------------------------
 -- Table structure for `pt_role`

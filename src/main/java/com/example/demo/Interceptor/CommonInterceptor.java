@@ -1,12 +1,8 @@
 package com.example.demo.Interceptor;
 
 import com.alibaba.fastjson.JSONObject;
-import com.example.demo.service.interceptor.InterceptorService;
-import com.example.demo.service.interceptor.InterceptorServiceImpl;
-import org.springframework.beans.factory.BeanFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.demo.mapper.InterceptorMapper;
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -16,10 +12,12 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
-
 @Component
 public class CommonInterceptor implements HandlerInterceptor {
-    private InterceptorService interceptorService = null;
+//    @Autowired
+//    private InterceptorService interceptorService;
+
+    public InterceptorMapper interceptorMapper;
 
     private List<String> excludedUrls;
 
@@ -27,8 +25,14 @@ public class CommonInterceptor implements HandlerInterceptor {
         return excludedUrls;
     }
 
+
     public void setExcludedUrls(List<String> excludedUrls) {
         this.excludedUrls = excludedUrls;
+    }
+
+    public CommonInterceptor(InterceptorMapper interceptorMapper) {
+        super();
+        this.interceptorMapper = interceptorMapper;
     }
 
     /**
@@ -52,7 +56,6 @@ public class CommonInterceptor implements HandlerInterceptor {
         response.setHeader("Access-Control-Max-Age", "3600");
         response.setHeader("Access-Control-Allow-Headers",
                 "Origin, X-Requested-With, Content-Type, Accept,token");
-        interceptorService = new InterceptorServiceImpl();
 //        拦截请求路径
         String path = request.getServletPath();
         if (path.matches(Const.NO_INTERCEPTOR_PATH)) {
@@ -73,15 +76,15 @@ public class CommonInterceptor implements HandlerInterceptor {
                         }else if(role.equals("pt-admin")){
 //                            系统管理员操作
 //                            检查token是否有效
-                            if(interceptorService==null) {
-                                BeanFactory factory = WebApplicationContextUtils.getRequiredWebApplicationContext(request.getServletContext());
-                                interceptorService = (InterceptorService) factory.getBean("interceptorServiceImpl");
-                            }
-                            if(interceptorService.checkPtAdmin(token)){
+//                            if(interceptorService==null) {
+//                                BeanFactory factory = WebApplicationContextUtils.getRequiredWebApplicationContext(request.getServletContext());
+//                                interceptorService = (InterceptorService) factory.getBean("interceptorServiceImpl");
+//                            }
+                            if(checkPtAdmin(token)){
 //                                检查是否有权限操作
-                                int adminId = interceptorService.getPtAdminIdByToken(token);
+                                int adminId = getPtAdminIdByToken(token);
 //                                if(true){
-                                if(interceptorService.checkPermission(adminId,url.split("/")[2]+"/"+url.split("/")[3]+"/"+url.split("/")[4])){
+                                if(checkPermission(adminId,"/"+url.split("/")[1]+"/"+url.split("/")[2]+"/"+url.split("/")[3]+"/"+url.split("/")[4])){
                                     HttpSession session = request.getSession();
                                     session.setAttribute("adminId",adminId);
                                     return true;
@@ -163,5 +166,26 @@ public class CommonInterceptor implements HandlerInterceptor {
                 writer.close();
         }
     }
+
+
+    //    兼职系统开始
+    public boolean checkPtAdmin(String token) {
+        if(interceptorMapper.checkToken(token)>0)
+            return true;
+        return false;
+    }
+
+    public int getPtAdminIdByToken(String token) {
+        return interceptorMapper.getPtAdminId(token);
+    }
+
+    public boolean checkPermission(int userId, String permissionUrl) {
+        if(interceptorMapper.checkAdminPermission(userId,permissionUrl)>0)
+            return true;
+        return false;
+    }
+
+    //    兼职系统结束
+
 }
 
