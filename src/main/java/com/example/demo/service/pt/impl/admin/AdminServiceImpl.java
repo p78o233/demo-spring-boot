@@ -62,26 +62,43 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public Boolean ioePtAdmin(PtAdmin ptAdmin) {
+    public Boolean ioePtAdmin(PtAdmin ptAdmin,int adminId) {
         if(ptAdmin.getId()==null){
 //            新增
 //            检查手机号码是否重复
             if(adminMapper.getExistAdmin(ptAdmin.getTel())>0)
                 return null;
-
+            ptAdmin.setCreateAdmin(adminId);
+            ptAdmin.setCreateTime(new Date());
+            ptAdmin.setPwd(Utils.makeMD5(ptAdmin.getPwd()));
+            if(adminMapper.insertPtAdmin(ptAdmin)>0)
+                return true;
+            return false;
         }else{
 //            修改
+            ptAdmin.setModifyAdmin(adminId);
+            ptAdmin.setModifyTime(new Date());
+            if(adminMapper.updatePtAdmin(ptAdmin)>0)
+                return true;
+            return false;
         }
-        return null;
     }
 
     @Override
-    public boolean deletePtAdmin(int id) {
+    public boolean deletePtAdmin(int id,int adminId) {
+        PtAdmin ptAdmin = new PtAdmin();
+        ptAdmin.setModifyTime(new Date());
+        ptAdmin.setModifyAdmin(adminId);
+        ptAdmin.setId(id);
+        if(adminMapper.deletePtAdmin(ptAdmin)>0)
+            return true;
         return false;
     }
 
     @Override
     public PageInfo<PtRole> getAllPtRoleByPage(int page, int perPage) {
+        int start = (page-1)*perPage;
+//        int count =
         return null;
     }
 

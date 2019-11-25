@@ -20,8 +20,8 @@ public interface AdminService {
 
 //    管理员管理
     public PageInfo<PtAdmin> getAllAdminByPage(String nickName,int page,int perPage);
-    public Boolean ioePtAdmin(PtAdmin ptAdmin);
-    public boolean deletePtAdmin(int id);
+    public Boolean ioePtAdmin(PtAdmin ptAdmin,int adminId);
+    public boolean deletePtAdmin(int id,int adminId);
 
 //    角色管理
     public PageInfo<PtRole> getAllPtRoleByPage(int page,int perPage);

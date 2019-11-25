@@ -38,5 +38,12 @@ public interface AdminMapper {
             "limit #{start},#{perPage}"+
             "</script>")
     List<PtAdmin> getPagePtAdmin(@Param("nickName")String nickName,@Param("start")int start,@Param("perPage")int perPage);
-//    @Insert("insert into pe_admin (tel,pwd,createTime)")
+    @Insert("insert into pt_admin (tel,pwd,createTime,createAdmin,nickName) values (#{p.tel},#{p.pwd},#{p.createTime},#{p.createAdmin},#{p.nickName})")
+    int insertPtAdmin(@Param("p")PtAdmin ptAdmin);
+    @Update("update pt_admin set modifyAdmin = #{p.modifyAdmin},modifyTime = #{p.modifyTime},nickName = #{p.nickName} where id = #{p.id}")
+    int updatePtAdmin(@Param("p")PtAdmin ptAdmin);
+    @Update("update pt_admin set isdel = '1' modifyAdmin = #{p.modifyAdmin},modifyTime = #{p.modifyTime} where id = #{p.id}")
+    int deletePtAdmin(@Param("p")PtAdmin ptAdmin);
+//    权限管理
+//    @Select("select count(*) from pt_role where ")
 }
