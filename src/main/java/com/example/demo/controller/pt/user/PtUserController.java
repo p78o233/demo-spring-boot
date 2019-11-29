@@ -23,8 +23,8 @@ public class PtUserController {
     @PostMapping(value = "/login")
     @ApiOperation(value = "用户登陆")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "tel",value = "手机号码",dataType = "String",paramType = "query",example = "123456"),
-            @ApiImplicitParam(name = "pwd",value = "密码",dataType = "String",paramType = "query",example = "123456")
+            @ApiImplicitParam(name = "tel",value = "手机号码",dataType = "String",paramType = "query"),
+            @ApiImplicitParam(name = "pwd",value = "密码",dataType = "String",paramType = "query")
     })
     public R login(@RequestParam String tel,@RequestParam String pwd){
         return ptUserService.loginPtUser(tel,pwd);
@@ -46,9 +46,9 @@ public class PtUserController {
     @PostMapping(value = "/updatePtUserPwd")
     @ApiOperation(value = "修改登陆密码")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "oldPwd",value = "旧密码",dataType = "String",paramType = "query",example = "123456"),
-            @ApiImplicitParam(name = "newPwd",value = "新密码",dataType = "String",paramType = "query",example = "123456"),
-            @ApiImplicitParam(name = "id",value = "用户id",dataType = "String",paramType = "query",example = "123456"),
+            @ApiImplicitParam(name = "oldPwd",value = "旧密码",dataType = "String",paramType = "query"),
+            @ApiImplicitParam(name = "newPwd",value = "新密码",dataType = "String",paramType = "query"),
+            @ApiImplicitParam(name = "id",value = "用户id",dataType = "String",paramType = "query"),
     })
     public R updatePtUserPwd(@RequestParam String oldPwd,@RequestParam String newPwd,@RequestParam int id){
         return new R(true,200,ptUserService.updatePtUserPwd(oldPwd,newPwd,id),"");
