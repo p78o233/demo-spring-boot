@@ -58,8 +58,6 @@ public class CommonInterceptor implements HandlerInterceptor {
                 "Origin, X-Requested-With, Content-Type, Accept,token");
 //        拦截请求路径
         String path = request.getServletPath();
-        if(true)
-            return true;
         if(path.split("/")[1].equals("demo")){
             //不拦截TestController
             return true;
