@@ -98,72 +98,152 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public PageInfo<PtRole> getAllPtRoleByPage(int page, int perPage) {
         int start = (page-1)*perPage;
-//        int count =
-        return null;
+        int count = adminMapper.getPtRoleCount();
+        List<PtRole> list = new ArrayList<>();
+        list = adminMapper.getPtRolePage(start,perPage);
+        PageInfo<PtRole> ptRolePageInfo = new PageInfo<>();
+        ptRolePageInfo.setCount(count);
+        ptRolePageInfo.setList(list);
+        return ptRolePageInfo;
     }
 
     @Override
-    public Boolean ioePtRole(PtRole ptRole) {
-        return null;
+    public Boolean ioePtRole(PtRole ptRole,int adminId) {
+        if(ptRole.getId()==null){
+//            新增
+            ptRole.setCreateAdmin(adminId);
+            ptRole.setCreateTime(new Date());
+            if(adminMapper.insertPtRole(ptRole)>0)
+                return true;
+            return false;
+        }else {
+//            修改
+            ptRole.setModifyTime(new Date());
+            ptRole.setModifyAdmin(adminId);
+            if(adminMapper.updatePtRole(ptRole)>0)
+                return true;
+            return false;
+        }
     }
 
     @Override
-    public boolean deleteAdmin(int id) {
+    public boolean deleteAdmin(int id,int adminId) {
+        if(adminMapper.deletePtRole(id,new Date(),adminId)>0)
+            return true;
         return false;
     }
 
     @Override
     public PageInfo<PtAdmin> getAllAdminByPageByRole(String nickName, int roleId, int page, int perPage) {
-        return null;
+        if("".equals(nickName)){
+            nickName = null;
+        }
+        int start = (page-1)*perPage;
+        int count = adminMapper.getAdminByRoleCount(nickName,roleId);
+        List<PtAdmin> list = new ArrayList<>();
+        list = adminMapper.getAdminByRolePage(nickName,roleId,start,perPage);
+        PageInfo<PtAdmin> pageInfo = new PageInfo<>();
+        pageInfo.setCount(count);
+        pageInfo.setList(list);
+        return pageInfo;
     }
 
     @Override
     public PageInfo<PtPermission> getFirstPermissionByRole(int roleId, int page, int perPage) {
-        return null;
+        int start = (page-1)*perPage;
+        int count = adminMapper.getPerByRoleCount(roleId);
+        List<PtPermission> list = new ArrayList<>();
+        list = adminMapper.getPerByRolePage(roleId,start,perPage);
+        PageInfo<PtPermission> pageInfo = new PageInfo<>();
+        pageInfo.setCount(count);
+        pageInfo.setList(list);
+        return pageInfo;
     }
 
     @Override
-    public List<PtPermission> getSecondPermissionByRole(int permissionid, int roleId, int page, int perPage) {
-        return null;
+    public PageInfo<PtPermission> getSecondPermissionByRole(int permissionid, int roleId, int page, int perPage) {
+        int start = (page-1)*perPage;
+        int count = adminMapper.getPerByRoleSecCount(roleId,permissionid);
+        List<PtPermission> list = new ArrayList<>();
+        list = adminMapper.getPerByRoleSecPage(roleId,permissionid,start,perPage);
+        PageInfo<PtPermission> pageInfo = new PageInfo<>();
+        pageInfo.setCount(count);
+        pageInfo.setList(list);
+        return pageInfo;
     }
 
     @Override
     public PageInfo<PtPermission> getFirstPermission(int page, int perPage) {
-        return null;
+        int start = (page-1)*perPage;
+        int count = adminMapper.getPerCount();
+        List<PtPermission> list = new ArrayList<>();
+        list = adminMapper.getPerPage(start,perPage);
+        PageInfo<PtPermission> pageInfo = new PageInfo<>();
+        pageInfo.setCount(count);
+        pageInfo.setList(list);
+        return pageInfo;
     }
 
     @Override
     public List<PtPermission> getSecondPermission(int id) {
-        return null;
+        return adminMapper.getPerSecPage(id);
     }
 
     @Override
-    public Boolean ioePtPermission(PtPermission ptPermission) {
-        return null;
+    public Boolean ioePtPermission(PtPermission ptPermission,int adminId) {
+        if(ptPermission.getId()==null){
+            ptPermission.setCreateAdmin(adminId);
+            ptPermission.setCreateTime(new Date());
+            if(adminMapper.insertPtPermission(ptPermission)>0)
+                return true;
+            return false;
+        }else{
+            ptPermission.setModifyAdmin(adminId);
+            ptPermission.setModifyTime(new Date());
+            if(adminMapper.updatePtPermission(ptPermission)>0)
+                return true;
+            return false;
+        }
     }
 
     @Override
-    public boolean deletePermission(int id) {
+    public boolean deletePermission(int id,int adminId) {
+        if(adminMapper.deletePtPermission(id,new Date(),adminId)>0)
+            return true;
         return false;
     }
 
     @Override
     public List<PtWorkCategory> getAllFirstWorkCategory() {
-        return null;
+        return adminMapper.getAllPtWorkCategory();
     }
 
     @Override
     public List<PtWorkCategory> getAllSecondWorkCategory(int id) {
-        return null;
+        return adminMapper.getAllPtWorkCategorySec(id);
     }
 
     @Override
-    public Boolean ioeWorkCategory(PtWorkCategory ptWorkCategory) {
-        return null;
+    public Boolean ioeWorkCategory(PtWorkCategory ptWorkCategory,int adminId) {
+        if(ptWorkCategory.getId()==null){
+            ptWorkCategory.setCreateTime(new Date());
+            ptWorkCategory.setCreateAdmin(adminId);
+            if(adminMapper.insertPtWorkCategory(ptWorkCategory)>0)
+                return true;
+            return false;
+        }else{
+            ptWorkCategory.setModifyTime(new Date());
+            ptWorkCategory.setModifyAdmin(adminId);
+            if(adminMapper.updatePtWorkCategory(ptWorkCategory)>0)
+                return true;
+            return false;
+        }
     }
 
     @Override
-    public boolean deleteWorkCategory(int id) {
+    public boolean deleteWorkCategory(int id,int adminId) {
+        if(adminMapper.deletePtWorkCategory(id,new Date(),adminId)>0)
+            return true;
         return false;
     }
 }
