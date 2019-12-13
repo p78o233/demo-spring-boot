@@ -4,6 +4,7 @@ package com.example.demo.service.impl;/*
  */
 
 import com.example.demo.entity.po.Test;
+import com.example.demo.entity.vo.User;
 import com.example.demo.service.TestService;
 import org.springframework.stereotype.Service;
 
@@ -44,5 +45,10 @@ public class TestServiceImplSec implements TestService {
     @Override
     public int deleteTest(int id) {
         return 0;
+    }
+
+    @Override
+    public List<User> getUser() {
+        return null;
     }
 }

@@ -5,6 +5,7 @@ package com.example.demo.service;/*
 
 import ch.qos.logback.core.db.dialect.HSQLDBDialect;
 import com.example.demo.entity.po.Test;
+import com.example.demo.entity.vo.User;
 
 import java.util.List;
 
@@ -23,4 +24,6 @@ public interface TestService {
     int updateTest(Test test);
 //    sql删除例子
     int deleteTest(int id);
+
+    List<User> getUser();
  }

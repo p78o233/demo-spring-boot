@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession;
 
 @RestController
 @RequestMapping("/pt/pt-user/index")
-@Api(description = "兼职用户模块")
+@Api(value = "用户模块")
 public class PtUserController {
     @Autowired
     private PtUserService ptUserService;

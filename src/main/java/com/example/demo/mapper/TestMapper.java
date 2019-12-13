@@ -4,6 +4,7 @@ package com.example.demo.mapper;/*
  */
 
 import com.example.demo.entity.po.Test;
+import com.example.demo.entity.vo.Money;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
@@ -33,4 +34,7 @@ public interface TestMapper {
 //    这个是物理删除
     @Delete("delete from test where id = #{id}")
     int deleteTest(@Param("id")int id);
+
+    @Select("select * from money")
+    List<Money> getMoney();
 }

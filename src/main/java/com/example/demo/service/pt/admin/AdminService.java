@@ -43,4 +43,5 @@ public interface AdminService {
     public List<PtWorkCategory> getAllSecondWorkCategory(int id);
     public Boolean ioeWorkCategory(PtWorkCategory ptWorkCategory, int adminId);
     public boolean deleteWorkCategory(int id, int adminId);
+
 }

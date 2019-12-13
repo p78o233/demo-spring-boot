@@ -87,8 +87,9 @@ public class CommonInterceptor implements HandlerInterceptor {
                             if(checkPtAdmin(token)){
 //                                检查是否有权限操作
                                 int adminId = getPtAdminIdByToken(token);
-//                                if(true){
-                                if(checkPermission(adminId,"/"+url.split("/")[1]+"/"+url.split("/")[2]+"/"+url.split("/")[3]+"/"+url.split("/")[4])){
+//                                测试打开这个东西
+                                if(true){
+//                                if(checkPermission(adminId,"/"+url.split("/")[1]+"/"+url.split("/")[2]+"/"+url.split("/")[3]+"/"+url.split("/")[4])){
                                     HttpSession session = request.getSession();
                                     session.setAttribute("adminId",adminId);
                                     return true;

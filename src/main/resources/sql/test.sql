@@ -10,10 +10,50 @@ Target Server Type    : MYSQL
 Target Server Version : 50717
 File Encoding         : 65001
 
-Date: 2019-11-18 15:54:31
+Date: 2019-12-13 17:38:04
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for `gorm_test`
+-- ----------------------------
+DROP TABLE IF EXISTS `gorm_test`;
+CREATE TABLE `gorm_test` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of gorm_test
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `money`
+-- ----------------------------
+DROP TABLE IF EXISTS `money`;
+CREATE TABLE `money` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(25) DEFAULT NULL,
+  `card` varchar(25) DEFAULT NULL,
+  `annount` int(11) DEFAULT NULL,
+  `st` int(11) DEFAULT NULL,
+  `toName` varchar(25) DEFAULT NULL,
+  `toCard` varchar(25) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of money
+-- ----------------------------
+INSERT INTO `money` VALUES ('1', 'a', 'a1', '100', '-1', 'b', 'b1');
+INSERT INTO `money` VALUES ('2', 'a', 'a1', '100', '1', 'b', 'b1');
+INSERT INTO `money` VALUES ('3', 'c', 'c1', '100', '-1', 'b', 'b1');
+INSERT INTO `money` VALUES ('4', 'c', 'c1', '100', '-1', 'a', 'a1');
 
 -- ----------------------------
 -- Table structure for `pt_admin`
@@ -36,7 +76,7 @@ CREATE TABLE `pt_admin` (
 -- ----------------------------
 -- Records of pt_admin
 -- ----------------------------
-INSERT INTO `pt_admin` VALUES ('1', '123', 'c4ca4238a0b923820dcc509a6f75849b', '123', '2019-11-14 09:53:37', null, null, null, '', 'p78o2');
+INSERT INTO `pt_admin` VALUES ('1', '123', '202cb962ac59075b964b07152d234b70', '123', '2019-11-14 09:53:37', null, null, null, '', 'p78o2');
 
 -- ----------------------------
 -- Table structure for `pt_admin_role`
@@ -316,11 +356,14 @@ CREATE TABLE `pt_work_category` (
 DROP TABLE IF EXISTS `test`;
 CREATE TABLE `test` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(20) DEFAULT NULL,
+  `name` varchar(20) CHARACTER SET utf8mb4 NOT NULL,
+  `age` int(11) NOT NULL DEFAULT '0',
+  `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of test
 -- ----------------------------
-INSERT INTO `test` VALUES ('1', 'p78o2');
+INSERT INTO `test` VALUES ('2', 'p78o12', '0', null);
+INSERT INTO `test` VALUES ('3', 'p78o12', '0', null);
