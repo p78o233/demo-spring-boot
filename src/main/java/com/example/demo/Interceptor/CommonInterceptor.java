@@ -116,6 +116,8 @@ public class CommonInterceptor implements HandlerInterceptor {
                         }
                     }
                     break;
+                    default:
+                        return true;
                 }
             }else{
 //                没有传token

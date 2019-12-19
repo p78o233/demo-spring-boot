@@ -37,6 +37,32 @@ public class SwaggerConfig {
                 .description("API 描述")
                 .build();
     }
+
+
+    @Bean
+    public Docket createRestLotteryApi() {
+        return new Docket(DocumentationType.SWAGGER_2)
+                .apiInfo(apiInfoLottery())
+                .select()
+                //为当前包路径
+                .apis(RequestHandlerSelectors.basePackage("com.example.demo.controller.lottery"))
+                .paths(PathSelectors.any())
+                .build().groupName("lottery");
+//        return new Docket(DocumentationType.SWAGGER_2).select().apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class)).build();
+    }
+    //构建 api文档的详细信息函数,注意这里的注解引用的是哪个
+    private ApiInfo apiInfoLottery() {
+        return new ApiInfoBuilder()
+                //页面标题
+                .title("Spring Boot 使用 Swagger2")
+                //版本号
+                .version("1.0")
+                //描述
+                .description("API 描述")
+                .build();
+    }
+
+
     @Bean
     public Docket createRestApiDefault() {
         return new Docket(DocumentationType.SWAGGER_2)

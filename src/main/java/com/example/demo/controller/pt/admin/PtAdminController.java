@@ -5,6 +5,7 @@ package com.example.demo.controller.pt.admin;/*
 
 import com.example.demo.callback.R;
 import com.example.demo.entity.po.pt.PtAdmin;
+import com.example.demo.entity.po.pt.PtRole;
 import com.example.demo.service.pt.admin.AdminService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -72,7 +73,7 @@ public class PtAdminController {
             return new R(false,500,false,"操作失败");
         }
     }
-    @ApiOperation(value = "/删除管理员")
+    @ApiOperation(value = "删除管理员")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id",value = "删除管理员的id",dataType = "int",paramType = "form")
     })
@@ -83,5 +84,39 @@ public class PtAdminController {
         if(adminService.deletePtAdmin(id,adminId))
             return new R(true,200,true,"操作成功");
         return new R(false,500,false,"操作失败");
+    }
+    @ApiOperation(value = "分页获取角色")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "page",value = "页码",dataType = "int",paramType = "query"),
+            @ApiImplicitParam(name = "perPage",value = "每页多少个",dataType = "int",paramType = "query")
+    })
+    @GetMapping(value = "/getAllPtRoleByPage")
+    public R getAllPtRoleByPage(@RequestParam(defaultValue = "1")int page,@RequestParam(defaultValue = "10")int perPage){
+        return new R (true,200,adminService.getAllPtRoleByPage(page,perPage),"查询成功");
+    }
+    @ApiOperation(value = "新增修改角色")
+    @PostMapping(value = "/ioePtRole")
+    public R ioePtRole(HttpServletRequest request, @RequestBody PtRole ptRole){
+        HttpSession session = request.getSession();
+        int adminId = (int)session.getAttribute("adminId");
+        if(adminService.ioePtRole(ptRole,adminId))
+            return new R(true,200,true,"操作成功");
+        return new R(false,500,false,"操作失败");
+    }
+    @ApiOperation(value = "删除角色")
+    @PostMapping(value = "/deleteAdmin")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id",value = "角色id",dataType = "int",paramType = "form")
+    })
+    public R deleteAdmin(HttpServletRequest request,@RequestParam int id){
+        HttpSession session = request.getSession();
+        int adminId = (int)session.getAttribute("adminId");
+        if(adminService.deleteAdmin(id,adminId))
+            return new R(true,200,true,"操作成功");
+        return new R(false,500,false,"操作失败");
+    }
+    @ApiOperation(value = "通过角色查用户")
+    public R getAllAdminByPageByRole(@RequestParam(defaultValue = "")String nickName,@RequestParam int roleId,@RequestParam(defaultValue = "1")int page,@RequestParam(defaultValue = "10")int perPage){
+        return new R(true,200,adminService.getAllAdminByPageByRole(nickName,roleId,page,perPage),"查询成功");
     }
 }
