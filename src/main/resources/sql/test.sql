@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50717
 File Encoding         : 65001
 
-Date: 2019-12-13 17:38:04
+Date: 2019-12-19 17:20:33
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -30,6 +30,31 @@ CREATE TABLE `gorm_test` (
 
 -- ----------------------------
 -- Records of gorm_test
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `lottery_record`
+-- ----------------------------
+DROP TABLE IF EXISTS `lottery_record`;
+CREATE TABLE `lottery_record` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '彩票表主键',
+  `lotteryType` tinyint(4) DEFAULT NULL COMMENT '彩票类型 1 双色球  2大乐透',
+  `num1` tinyint(4) DEFAULT NULL,
+  `num2` tinyint(4) DEFAULT NULL,
+  `num3` tinyint(4) DEFAULT NULL,
+  `num4` tinyint(4) DEFAULT NULL,
+  `num5` tinyint(4) DEFAULT NULL,
+  `num6` tinyint(4) DEFAULT NULL,
+  `num7` tinyint(4) DEFAULT NULL,
+  `issueNumber` int(10) unsigned DEFAULT NULL COMMENT '期号',
+  `createTime` datetime DEFAULT NULL,
+  `openTime` date DEFAULT NULL COMMENT '开奖日期',
+  `weekDay` int(11) DEFAULT NULL COMMENT '周几',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of lottery_record
 -- ----------------------------
 
 -- ----------------------------
