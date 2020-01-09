@@ -61,7 +61,21 @@ public class LotteryServiceImpl implements LotteryService {
                     jsonObject.put("times",lotteryMapper.getLotteryBack(i,issues));
                     list.add(jsonObject);
                 }
+                break;
             }
+            case 3:{
+//                福彩3D
+                for(int i = 0;i <= 9;i++){
+                    JSONObject jsonObject = new JSONObject();
+                    jsonObject.put("position","all");
+                    jsonObject.put("num",i);
+                    jsonObject.put("num1Time",lotteryMapper.get3Dnum1(i,issues));
+                    jsonObject.put("num2Time",lotteryMapper.get3Dnum1(i,issues));
+                    jsonObject.put("num3Time",lotteryMapper.get3Dnum1(i,issues));
+                    list.add(jsonObject);
+                }
+            }
+
         }
         return list;
     }

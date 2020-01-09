@@ -38,6 +38,13 @@ public interface LotteryMapper {
     int getLotteryFront(@Param("num")int num,@Param("issues")int issues);
     @Select("select count(*) from lottery_record where lotteryType = 2 and num6 = #{num} or num7 = #{num} order by issueNumber desc limit 0, #{issues}")
     int getLotteryBack(@Param("num")int num,@Param("issues")int issues);
+//    3D的
+    @Select("select count(*) from lottery_record where lotteryType = 3 and num1 = #{num} order by issueNumber desc limit 0, #{issues}")
+    int get3Dnum1(@Param("num")int num,@Param("issues")int issues);
+    @Select("select count(*) from lottery_record where lotteryType = 3 and num2 = #{num} order by issueNumber desc limit 0, #{issues}")
+    int get3Dnum2(@Param("num")int num,@Param("issues")int issues);
+    @Select("select count(*) from lottery_record where lotteryType = 3 and num3 = #{num} order by issueNumber desc limit 0, #{issues}")
+    int get3Dnum3(@Param("num")int num,@Param("issues")int issues);
 
     @Select("select * from lottery_record where lotteryType = #{lotteryType} and issueNumber = #{issueNumber}")
     LotteryRecord getOneIssue(@Param("lotteryType")int lotteryType,@Param("issueNumber")int issueNumber);
